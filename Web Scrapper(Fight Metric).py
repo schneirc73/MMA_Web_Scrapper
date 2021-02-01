@@ -214,14 +214,17 @@ Winners =[]
 start = time.time()
 Event_urls = []
 
-url = 'http://www.ufcstats.com/statistics/events/completed?page=5'
+### Start from event page one, when I tried this with a for loop a few problems occured and just changing the number of each page works for now, so
+### start at page=1 and change t=Event_urls[6:30] to only grab completed events and from page=2 onwards to page=n change to t=Event_urls[5:30]
+
+url = 'http://www.ufcstats.com/statistics/events/completed?page=1'
 
 response = requests.get(url)
 soup = BeautifulSoup(response.content, "html.parser")
 
 for a in soup.find_all('a', href=True):  # This for Loop grabs all the event links on the event page
     Event_urls.append(a['href'])
-t=Event_urls[5:30] # Puts all the event links of interes
+t=Event_urls[6:30] # Puts all the event links of interes
 
 for url in t: #This places each event into the url to allow for scrapping of each event on a page
     response = requests.get(url)
