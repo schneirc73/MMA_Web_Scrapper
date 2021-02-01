@@ -204,3 +204,47 @@ fights = pd.DataFrame({
 
 })
 
+## When pulling information from FightMetric, the winner tag is an imagie, so a way to work around this is to pull the name of the fighters from the event page,
+## and because on the event page the first name on the list is the winner when we merge it later we can take 1,3,....,n and match it to Name_A column in the larger
+## dataset giving us a fragile workaround but one that will work
+
+fighters_list= []
+Winners =[]
+
+start = time.time()
+Event_urls = []
+
+url = 'http://www.ufcstats.com/statistics/events/completed?page=5'
+
+response = requests.get(url)
+soup = BeautifulSoup(response.content, "html.parser")
+
+for a in soup.find_all('a', href=True):  # This for Loop grabs all the event links on the event page
+    Event_urls.append(a['href'])
+t=Event_urls[5:30] # Puts all the event links of interes
+
+for url in t: #This places each event into the url to allow for scrapping of each event on a page
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+    p=soup.find_all('a',  {'class':"b-link b-link_style_black"})
+    for i in p:
+        TT=i.text.strip()
+        fighters_list.append(TT)
+
+    sleep(randint(2,5))
+end = time.time()
+print(end - start)
+
+Winners = fighters_list[::2] # This grabs 1,3,......,n aka the winner from each fight.
+
+## This Dataframe will be the same length as the larger fight database and will be ordered in the same way so by creating a fake column for both we can merge and fix the issue
+## of not being able to pull the winner from the fight tables.
+Winner_DF = pd.DataFrame({
+
+    'Winners' : Winners
+})
+Winner_DF
+
+
+
+
