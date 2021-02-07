@@ -1,2 +1,2 @@
-# MMA_Web_Scrapper
-Web Scrapper Code used to pull information on UFC fights that will be used to predict the outcomes in a future project.
+# MMA_Web_Scrapper-Data-Cleaning
+Web Scrapper Code used to pull information on UFC fights that will be used to predict the outcomes in a future project.  The cleaning part of this project is currently being worked on, I will explain the data manipulation more in depth when I am abel to upload the code...
